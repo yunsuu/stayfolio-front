@@ -1,11 +1,26 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import { Button, Alert, Container, Navbar, Nav } from 'react-bootstrap';
+import {
+  Button,
+  Alert,
+  Container,
+  Navbar,
+  Nav,
+  Card,
+  Col,
+  Image,
+  Row,
+} from 'react-bootstrap';
 import { useState } from 'react';
 
 export default function Home() {
   const [show, setShow] = useState(true);
+
+  const myFun = () => {
+    fetch('http://localhost:9000/stores')
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <>
@@ -18,20 +33,35 @@ export default function Home() {
           </Nav>
         </Container>
       </Navbar>
-      <Alert show={show} variant="success">
-        <Alert.Heading>How's it going?!</Alert.Heading>
-        <p>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-          lacinia odio sem nec elit. Cras mattis consectetur purus sit amet
-          fermentum.
-        </p>
-        <hr />
-        <div className="d-flex justify-content-end">
-          <Button onClick={() => setShow(false)} variant="outline-success">
-            Close me y'all!
-          </Button>
-        </div>
-      </Alert>
+      {myFun()}
+      <Container>
+        <Row className="justify-content-md-center">
+          <Col>
+            <Image
+              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
+              thumbnail
+            />
+          </Col>{' '}
+          <Col>
+            <Image
+              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
+              thumbnail
+            />
+          </Col>{' '}
+          <Col>
+            <Image
+              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
+              thumbnail
+            />
+          </Col>
+          <Col>
+            <Image
+              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
+              thumbnail
+            />
+          </Col>
+        </Row>
+      </Container>
 
       <hr class="solid" />
       <Container color="#000000">
