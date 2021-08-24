@@ -11,8 +11,10 @@ import {
   Modal,
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const router = useRouter();
   const [items, setItems] = useState(null);
   const [popUpItem, setPopUpItem] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
@@ -34,7 +36,13 @@ export default function Home() {
         <Container>
           <Navbar.Brand href="#home">AWESOME FOOD STORE</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={() => {}}>STORE</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                router.push('/');
+              }}
+            >
+              STORE
+            </Nav.Link>
             <Nav.Link href="#features">ABOUT</Nav.Link>
           </Nav>
         </Container>
