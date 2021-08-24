@@ -8,18 +8,28 @@ import {
   Col,
   Image,
   Row,
+  Modal,
 } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [show, setShow] = useState(true);
+  const [items, setItems] = useState(null);
+  const [popUpItems, setPopUpItems] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
+  const handlePopUpClose = () => setShowPopup(false);
+  const handlePopUpShow = () => setShowPopup(true);
 
-  const myFun = () => {
+  useEffect(() => {
     fetch('http://localhost:9000/stores')
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        setItems(res);
       });
+    // 에러처리
+  }, []);
+
+  const myFun = () => {
+    console.log(items);
   };
 
   return (
@@ -33,40 +43,65 @@ export default function Home() {
           </Nav>
         </Container>
       </Navbar>
-      {myFun()}
+
       <Container>
-        <Row className="justify-content-md-center">
-          <Col>
-            <Image
-              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
-              thumbnail
-            />
-          </Col>{' '}
-          <Col>
-            <Image
-              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
-              thumbnail
-            />
-          </Col>{' '}
-          <Col>
-            <Image
-              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
-              thumbnail
-            />
-          </Col>
-          <Col>
-            <Image
-              src="https://s3.ap-northeast-2.amazonaws.com/images.brandsites/common-ground/uploads/00000000354.png"
-              thumbnail
-            />
-          </Col>
+        <Row Row md={4}>
+          {items === null ? (
+            <div> 로딩중</div>
+          ) : (
+            items.map((item, idx) => {
+              return (
+                <Col
+                  onClick={(idx) => {
+                    setPopUpItems(idx);
+                    handlePopUpShow();
+                  }}
+                  key={item.id}
+                >
+                  <Image src={item.thumb} thumbnail />
+                </Col>
+              );
+            })
+          )}
         </Row>
       </Container>
+      {items === undefined ? null : (
+        <Modal show={showPopup} onHide={handlePopUpClose}>
+          <Modal.Header>
+            <Modal.Title>{items[popUpItems].name}</Modal.Title>
+            <Button onClick={handlePopUpClose} variant="light">
+              X
+            </Button>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handlePopUpClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handlePopUpClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
-      <hr class="solid" />
+        // <Modal show={showPopup} onHide={handlePopUpClose}>
+        //     <Modal.Header>
+        //       <Modal.Title>{items[popUpItems].name}</Modal.Title>
+        //       <Button onClick={handlePopUpClose} variant="light">
+        //         X
+        //       </Button>
+        //     </Modal.Header>
+        //     <Image src={items[popUpItems].image} />
+        //     <Modal.Body>{items[popUpItems].description}</Modal.Body>
+        //     <Modal.Footer>
+        //       <Button variant="primary">홈페이지 바로가기</Button>
+        //     </Modal.Footer>
+        //   </Modal>
+      )}
       <Container color="#000000">
-        <text>@ 2021 이윤수</text>
+        <span>@ 2021 이윤수</span>
       </Container>
+      {/* 팝업 */}
     </>
   );
 }
