@@ -1,0 +1,8 @@
+1. 패키지 설치를 합니다.
+yarn
+
+2. json-server를 실행합니다.
+json-server -p 9000 db.json
+
+3. 프로젝트를 실행시킵니다.
+yarn dev
