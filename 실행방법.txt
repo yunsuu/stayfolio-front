@@ -4,5 +4,9 @@ yarn
 2. json-server를 실행합니다.
 json-server -p 9000 db.json
 
-3. 프로젝트를 실행시킵니다.
+(json-server가 안깔려있을 경우 global 경로로 설치해준 후 2번을 실행합니다.)
+npm install -g json-server
+
+3. 터미널을 새로 만들어 추가한 콘솔에서 프로젝트를 실행시킵니다.
+(json-server를 실행하면 그 콘솔에 추가적인 명령어 입력이 불가능하기 때문에)
 yarn dev

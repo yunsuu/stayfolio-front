@@ -1,10 +1,15 @@
 import { Container } from 'react-bootstrap';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import Head from 'next/head';
 
 export default function About() {
   return (
     <>
+      <Head>
+        <title>설명 페이지</title>
+        <meta name="description" content="설명 페이지" />
+      </Head>
       <Header />
       <Container>
         <h1 id="1-">1. 사용한 기술</h1>
